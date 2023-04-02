@@ -1392,7 +1392,7 @@ void insert_disk(int slot, int drive, const char *name, int ejected, int force_s
   dsk->just_ejected = 0;
   dsk->force_size = force_size;
 
-  if(!dsk->file) {
+  if(dsk->file) {
     eject_disk(dsk);
   }
 
