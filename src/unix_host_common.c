@@ -276,7 +276,7 @@ void host_get_file_xinfo(const char *path, struct file_info *fi) {
       fi->resource_blocks = st.st_blocks;
   }
 
-  tmp = getxattr(path, "user.com.apple.FinderInfo", fi->finder_info, 32);
+  tmp = getxattr(path, "user."XATTR_FINDERINFO_NAME, fi->finder_info, 32);
   if (tmp == 16 || tmp == 32) {
     fi->has_fi = 1;
 
@@ -413,7 +413,7 @@ word32 host_set_file_info(const char *path, struct file_info *fi) {
 word32 host_set_file_info(const char *path, struct file_info *fi) {
 
   if (fi->has_fi && fi->storage_type != 0x0d) {
-    int ok = setxattr(path, "user.com.apple.FinderInfo", fi->finder_info, 32, 0);
+    int ok = setxattr(path, "user."XATTR_FINDERINFO_NAME, fi->finder_info, 32, 0);
     if (ok < 0) return host_map_errno(errno);
   }
 
